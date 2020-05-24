@@ -1,0 +1,6 @@
+# General
+.quasar
+dist
+node_modules
+*flag.d.ts
+*.log

@@ -1,1 +1,3 @@
-# recipe-website
+# jara
+
+## Just Another Recipe App

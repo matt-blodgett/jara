@@ -1,0 +1,1 @@
+export const INITIALIZE_STORE = 'INITIALIZE_STORE'
