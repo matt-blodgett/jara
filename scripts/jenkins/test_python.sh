@@ -2,7 +2,7 @@
 
 set -ex
 
-cd back-api
+cd src-api
 pytest \
     --cov=. \
     --cov-report=xml \
