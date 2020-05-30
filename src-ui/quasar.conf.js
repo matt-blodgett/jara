@@ -15,10 +15,10 @@ module.exports = function (ctx) {
     ],
     extras: [
       'mdi-v5'
-      // 'fontawesome-v5'
     ],
-    supportIE: true,
+    // supportIE: true,
     build: {
+      modern: true,
       env: {
         VERSION: JSON.stringify(version)
       },
@@ -48,13 +48,12 @@ module.exports = function (ctx) {
       ]
     },
     devServer: {
-      // https: true,
       port: 8888,
       open: true,
       host: '0.0.0.0',
       proxy: {
         '/api': {
-          target: 'http://django:8000',
+          target: 'http://api:8000',
           secure: false,
           changeOrigin: true
         }
@@ -66,13 +65,24 @@ module.exports = function (ctx) {
     framework: {
       all: false,
       components: [
+        'QBadge',
+        'QBanner',
+        'QBar',
         'QBtn',
+        'QCard',
+        'QCardActions',
+        'QCardSection',
         'QFooter',
+        'QForm',
         'QHeader',
+        'QIcon',
         'QInnerLoading',
+        'QInput',
         'QLayout',
         'QPage',
         'QPageContainer',
+        'QSeparator',
+        'QSpace',
         'QSpinner'
       ],
       directives: [
@@ -91,9 +101,8 @@ module.exports = function (ctx) {
         loadingBar: {
           skipHijack: true
         }
-      }
-      // iconSet: ctx.theme.mat ? 'material-icons' : 'ionicons'
-      // i18n: 'de' // Quasar language
+      },
+      iconSet: 'mdi-v5'
     },
     animations: [],
     ssr: {
@@ -133,9 +142,6 @@ module.exports = function (ctx) {
           }
         ]
       }
-    },
-    cordova: {
-      // id: 'org.cordova.quasar.app'
     }
   }
 }

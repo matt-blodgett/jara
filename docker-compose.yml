@@ -3,7 +3,6 @@ version: "3.8"
 services:
   db:
     build: "./src-db/."
-    command: "--default-authentication-plugin=mysql_native_password"
     ports:
       - "3306:3306"
     environment:
@@ -11,20 +10,24 @@ services:
       MYSQL_USER: "django"
       MYSQL_PASSWORD: "test"
       MYSQL_ROOT_PASSWORD: "test"
+    command: >
+      "--default-authentication-plugin=mysql_native_password"
 
   api:
     build: "./src-api/."
     volumes:
       - "./src-api/:/code"
-      - "./src-ui/dist/pwa/:/code/public"
     ports:
       - "8000:8000"
-    environment:
-      DEBUG: 1
     depends_on:
       - "db"
+    environment:
+      DEBUG: 1
     command: >
-      bash -c "./wait-for-it.sh db:3306 -t 300 -- python manage.py runserver [::]:8000"
+      bash -c "
+      ./wait-for-it.sh db:3306 -t 300 
+      -- python manage.py migrate 
+      && python manage.py runserver [::]:8000"
 
   ui:
     build: "./src-ui/."
@@ -34,4 +37,5 @@ services:
       - "8888:8888"
     depends_on:
       - "api"
-    command: "yarn run dev"
+    command: >
+      yarn run dev

@@ -17,5 +17,4 @@ export default {
 </script>
 
 <style scoped lang="stylus">
-@import '~src/css/quasar.variables.styl'
 </style>

@@ -7,6 +7,12 @@ Vue.use(VueRouter)
 
 const ROOT_PAGE_TITLE = 'Jara'
 
+LoadingBar.setDefaults({
+  color: 'red',
+  size: '2px',
+  position: 'top'
+})
+
 function callOrPassThrough (maybeFunction, ...args) {
   return typeof maybeFunction === 'function' ? maybeFunction(...args) : maybeFunction
 }

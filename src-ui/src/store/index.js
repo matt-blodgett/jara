@@ -6,13 +6,13 @@ import createPersistedState from 'vuex-persistedstate'
 import state from './state'
 import actions from './actions'
 import mutations from './mutations'
+import auth from './modules/auth'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
   plugins: [
     createLogger(),
-    // createPersistedState({ storage: window.sessionStorage }), -- sessionStorage prevents multi-window use
     createPersistedState(),
     vuexCache
   ],
@@ -21,6 +21,7 @@ const store = new Vuex.Store({
   state,
   strict: (process.env.NODE_ENV !== 'production'),
   modules: {
+    auth
   }
 })
 

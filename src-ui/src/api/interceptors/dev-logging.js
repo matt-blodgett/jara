@@ -21,7 +21,6 @@ export default axios => {
       console.log('%c ' + response.status + ' - ' + getUrl(response.config) + ':', 'color: #008000; font-weight: bold', response)
       return response
     },
-
     (error) => {
       const status = error.response ? error.response.status : 'No response'
       console.log('%c ' + status + ' - ' + ':', 'color: #a71d5d; font-weight: bold', error)

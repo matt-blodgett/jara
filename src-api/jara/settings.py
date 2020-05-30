@@ -8,6 +8,15 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'insecure-key')
 DEBUG = int(os.environ.get('DEBUG', '0'))
 
 
+ROOT_URLCONF = 'jara.urls'
+
+
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1'
+]
+
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
@@ -29,10 +38,6 @@ LOGGING = {
             'handlers': ['console'],
             'propagate': False
         },
-        'root': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-        },
         'django': {
             'handlers': ['console'],
             'level': 'INFO',
@@ -42,18 +47,8 @@ LOGGING = {
 }
 
 
-ALLOWED_HOSTS = [
-    'localhost',
-    '127.0.0.1'
-]
-
-
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware'
+    'corsheaders.middleware.CorsMiddleware'
 ]
 
 
@@ -63,44 +58,43 @@ CORS_ORIGIN_ALLOW_ALL = True
 INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.auth',
-    'corsheaders'
+    'corsheaders',
+    'api.users'
 ]
 
 
-ROOT_URLCONF = 'jara.urls'
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.Argon2PasswordHasher'
+]
 
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-    }
-}
-
-
-DATABASE_ROUTERS = []
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
         'NAME': 'jara',
-        'USER': os.environ.get('MYSQL_USER', 'root'),
+        'ENGINE': 'django.db.backends.mysql',
+        'USER': os.environ.get('MYSQL_USER', 'django'),
         'PASSWORD': os.environ.get('MYSQL_PASSWORD', 'test'),
         'HOST': os.environ.get('MYSQL_HOST', 'db'),
         'PORT': os.environ.get('MYSQL_PORT', '3306'),
+        'TEST': {},
         'ATOMIC_REQUESTS': False,
         'AUTOCOMMIT': True,
         'CONN_MAX_AGE': 0,
         'TIME_ZONE': None,
-        'DISABLE_SERVER_SIDE_CURSORS': False,
-        'TEST': {}
+        'DISABLE_SERVER_SIDE_CURSORS': False
     }
 }
 
 
-AUTHENTICATION_BACKENDS = []
 REST_FRAMEWORK = {
     'PAGE_SIZE': 10,
     'ORDERING_PARAM': 'sort',
-    'DEFAULT_PERMISSION_CLASSES': []
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'api.library.authentication.TokenAuthentication'
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny'
+    ]
 }
 
 
@@ -109,5 +103,3 @@ TIME_ZONE = 'UTC'
 USE_I18N = False
 USE_L10N = False
 USE_TZ = True
-
-CSRF_COOKIE_SECURE = True

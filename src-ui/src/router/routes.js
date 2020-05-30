@@ -2,14 +2,21 @@ const routes = [
   {
     path: '/',
     redirect: to => {
-      return '/home'
+      return '/login'
     }
   },
   {
-    path: '/home',
+    path: '/login',
+    component: () => import('layouts/TopLayoutLogin.vue'),
+    children: [
+      { path: '', props: true, component: () => import('pages/Login.vue'), meta: { title: route => 'Login' } }
+    ]
+  },
+  {
+    path: '/pages',
     component: () => import('layouts/TopLayout.vue'),
     children: [
-      { path: '', props: true, component: () => import('pages/Home.vue'), meta: { title: route => 'Home' } }
+      { path: 'home', props: true, component: () => import('pages/Home.vue'), meta: { title: route => 'Home' } }
     ]
   },
   {

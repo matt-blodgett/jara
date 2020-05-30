@@ -12,7 +12,7 @@ export default {
 }
 </script>
 
-<style scoped lang=stylus>
+<style scoped lang="stylus">
   .loader
     height 100px
     width 100%
