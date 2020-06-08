@@ -65,6 +65,10 @@ module.exports = function (ctx) {
     framework: {
       all: false,
       components: [
+        'QList',
+        'QItem',
+        'QItemSection',
+        'QItemLabel',
         'QBadge',
         'QBanner',
         'QBar',
@@ -72,6 +76,7 @@ module.exports = function (ctx) {
         'QCard',
         'QCardActions',
         'QCardSection',
+        'QDrawer',
         'QFooter',
         'QForm',
         'QHeader',
@@ -81,11 +86,15 @@ module.exports = function (ctx) {
         'QLayout',
         'QPage',
         'QPageContainer',
+        'QScrollArea',
         'QSeparator',
         'QSpace',
-        'QSpinner'
+        'QSpinner',
+        'QToolbar',
+        'QToolbarTitle'
       ],
       directives: [
+        'Ripple'
       ],
       plugins: [
         // 'Dialog',

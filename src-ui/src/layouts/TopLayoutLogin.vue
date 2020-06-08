@@ -1,16 +1,20 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="hhh lpr fff">
+
     <q-header>
-      <q-bar dense>
-        <q-space/>
+      <q-bar>
+        <q-space />
         <q-badge transparent color="primary">{{ appVersion }}</q-badge>
       </q-bar>
     </q-header>
+
     <q-page-container>
       <router-view />
     </q-page-container>
+
     <q-footer>
     </q-footer>
+
   </q-layout>
 </template>
 

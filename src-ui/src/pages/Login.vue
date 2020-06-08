@@ -73,7 +73,7 @@ export default {
               .then(() => {
                 const redirect = this.$route.query.redirect
                 this.$q.loading.hide()
-                this.$router.push(redirect || '/pages/home')
+                this.$router.push(redirect || '/home')
               })
               .catch(() => {
                 this.$q.loading.hide()

@@ -1,29 +1,38 @@
 const routes = [
   {
-    path: '/',
-    redirect: to => {
-      return '/login'
-    }
-  },
-  {
     path: '/login',
     component: () => import('layouts/TopLayoutLogin.vue'),
     children: [
-      { path: '', props: true, component: () => import('pages/Login.vue'), meta: { title: route => 'Login' } }
+      {
+        path: '',
+        props: true,
+        component: () => import('pages/Login.vue'),
+        meta: { title: route => 'Login' }
+      }
     ]
   },
   {
-    path: '/pages',
+    path: '/',
     component: () => import('layouts/TopLayout.vue'),
     children: [
-      { path: 'home', props: true, component: () => import('pages/Home.vue'), meta: { title: route => 'Home' } }
-    ]
-  },
-  {
-    path: '/401-unauthorized',
-    component: () => import('layouts/TopLayout.vue'),
-    children: [
-      { path: '', props: true, component: () => import('pages/Error401.vue'), meta: { title: route => '401 Unauthorized' } }
+      {
+        path: '',
+        redirect: to => {
+          return '/home'
+        }
+      },
+      {
+        path: 'home',
+        props: true,
+        component: () => import('pages/Home.vue'),
+        meta: { title: route => 'Home' }
+      },
+      {
+        path: '401-unauthorized',
+        props: true,
+        component: () => import('pages/Error401.vue'),
+        meta: { title: route => '401 Unauthorized' }
+      }
     ]
   },
   {

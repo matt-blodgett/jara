@@ -15,7 +15,8 @@ const state = {
 }
 
 const getters = {
-  userProfile: state => state.profile
+  userProfile: state => state.profile,
+  isAuthenticated: state => !!state.token
 }
 
 const actions = {
