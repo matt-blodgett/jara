@@ -1,7 +1,9 @@
 import os
 
 
-VERSION = '0.00.1'
+JARA_VERSION = '0.00.1'
+
+
 SECRET_KEY = os.environ.get('SECRET_KEY', 'insecure-key')
 
 

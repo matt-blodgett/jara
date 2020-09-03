@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from jara.settings import VERSION
+from jara.settings import JARA_VERSION
 
 
 class VersionView(APIView):
@@ -9,4 +9,4 @@ class VersionView(APIView):
     permission_classes = []
 
     def get(self, _):
-        return Response(data={'version': VERSION}, status=200)
+        return Response(data={'version': JARA_VERSION}, status=200)
