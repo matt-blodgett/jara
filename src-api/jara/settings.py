@@ -1,7 +1,7 @@
 import os
 
 
-VERSION = '0.00.1'
+VERSION = '1.0.0'
 SECRET_KEY = os.environ.get('SECRET_KEY', 'insecure-key')
 
 
