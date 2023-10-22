@@ -1,42 +1,35 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import vuexCache from 'vuex-cache'
-import createLogger from 'vuex/dist/logger'
-import createPersistedState from 'vuex-persistedstate'
-import state from './state'
-import actions from './actions'
-import mutations from './mutations'
+import { createStore } from 'vuex'
+import VuexPersistence from 'vuex-persist'
 import auth from './modules/auth'
 
-Vue.use(Vuex)
+const vuexLocal = new VuexPersistence({
+  storage: window.localStorage
+})
 
-const store = new Vuex.Store({
+const store = createStore({
   plugins: [
-    createLogger(),
-    createPersistedState(),
-    vuexCache
+    vuexLocal.plugin
   ],
-  actions,
-  mutations,
-  state,
   strict: (process.env.NODE_ENV !== 'production'),
   modules: {
     auth
   }
 })
 
-if (module.hot) {
-  module.hot.accept([
-    './actions',
-    './getters',
-    './mutations'
-  ], () => {
-    store.hotUpdate({
-      actions: require('./actions'),
-      getters: require('./getters'),
-      mutations: require('./mutations')
-    })
-  })
-}
+// add to jsconfig.json compilerOptions
+//     "types": ["vite/client"],
+
+// if (import.meta.hot) {
+//   import.meta.hot.accept([
+//     './modules/auth'
+//   ], () => {
+//     const newModuleAuth = require('./modules/auth').default
+//     store.hotUpdate({
+//       modules: {
+//         auth: newModuleAuth
+//       }
+//     })
+//   })
+// }
 
 export default store

@@ -33,9 +33,10 @@ services:
     build: "./src-ui/."
     volumes:
       - "./src-ui/:/code"
+      - "/code/node_modules"
     ports:
       - "8888:8888"
     depends_on:
       - "api"
     command: >
-      yarn run dev
+      yarn dev

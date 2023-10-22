@@ -1,54 +1,89 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import { LoadingBar } from 'quasar'
-import routes from './routes'
+import { createRouter, createWebHistory } from 'vue-router'
+import store from '@/store'
 
-Vue.use(VueRouter)
+const routes = [
+  {
+    path: '/login',
+    component: () => import('@/layouts/Default.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/Login.vue'),
+        meta: {
+          title: 'Login'
+        }
+      }
+    ]
+  },
+  {
+    path: '/',
+    component: () => import('@/layouts/Main.vue'),
+    children: [
+      {
+        path: '',
+        redirect: to => {
+          const isAuthenticated = store.getters.isAuthenticated
+          if (isAuthenticated) {
+            return { path: '/home' }
+          }
+          return { path: '/login' }
+        }
+      },
+      {
+        path: 'home',
+        component: () => import('@/views/Home.vue'),
+        meta: {
+          title: 'Home'
+        }
+      },
+      {
+        path: 'test',
+        component: () => import('@/views/Test.vue'),
+        meta: {
+          title: 'Test'
+        }
+      },
+      {
+        path: '401-unauthorized',
+        component: () => import('@/views/Error401.vue'),
+        meta: {
+          title: '401 Unauthorized'
+        }
+      }
+    ]
+  },
+  {
+    path: '/:unknownPath(.*)',
+    component: () => import('@/layouts/Default.vue'),
+    children: [
+      { 
+        path: '',
+        component: () => import('@/views/Error404.vue'),
+        meta: {
+          title: '404 Not Found'
+        }
+      }
+    ]
+  }
+]
 
-const ROOT_PAGE_TITLE = 'Jara'
-
-LoadingBar.setDefaults({
-  color: 'red',
-  size: '2px',
-  position: 'top'
+const router = createRouter({
+  history: createWebHistory(process.env.BASE_URL),
+  routes,
 })
 
-function callOrPassThrough (maybeFunction, ...args) {
-  return typeof maybeFunction === 'function' ? maybeFunction(...args) : maybeFunction
-}
-
-export default function (/* { store, ssrContext } */) {
-  const Router = new VueRouter({
-    scrollBehavior: () => ({ y: 0 }),
-    routes,
-    // Leave these as is and change from quasar.conf.js instead!
-    // quasar.conf.js -> build -> vueRouterMode
-    mode: process.env.VUE_ROUTER_MODE,
-    base: process.env.VUE_ROUTER_BASE
-  })
-
-  {
-    let currentState = false
-    const toggleLoadingBar = state => {
-      if (state === currentState) return
-      LoadingBar[state ? 'start' : 'stop']()
-      currentState = state
-    }
-    Router.beforeEach((to, from, next) => {
-      toggleLoadingBar(true)
-      next()
-    })
-    Router.afterEach((to, from) => {
-      toggleLoadingBar(false)
-    })
+router.onError((error, to) => {
+  // "Importing a module script failed"
+  if (error.message.includes('Failed to fetch dynamically imported module')) {
+    window.location.href = to.fullPath
   }
+})
 
-  Router.afterEach((to, from) => {
-    Vue.nextTick(() => {
-      const routePageTitlePart = callOrPassThrough(to.meta.title, to)
-      window.document.title = routePageTitlePart ? `${ROOT_PAGE_TITLE} / ${routePageTitlePart}` : ROOT_PAGE_TITLE
-    })
-  })
+router.afterEach((to, from) => {
+  const titleDefault = 'Jara'
+  const titleRoute = to.meta.title
+  const titleWindow = titleRoute || titleDefault
+  window.document.title = titleWindow
+})
 
-  return Router
-}
+export default router
