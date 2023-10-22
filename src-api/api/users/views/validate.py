@@ -6,10 +6,10 @@ from api.users import models as user_models
 
 
 class RequestSerializer(serializers.Serializer):
-    user_id = serializers.CharField()
+    username = serializers.CharField()
 
 
-class UserValidationView(APIView):
+class UserCheckExistsView(APIView):
     authentication_classes = []
     permission_classes = []
 
@@ -18,8 +18,11 @@ class UserValidationView(APIView):
         query_params.is_valid(raise_exception=True)
         query_params = query_params.validated_data
 
-        if user_models.User.objects.filter(user_id=query_params['user_id']).exists():
-            raise serializers.ValidationError(detail='user_id exists')
+        exists = user_models.User.objects.filter(
+            username=query_params['username']
+        ).exists()
 
-        data = {'valid': True}
+        data = {
+            'exists': exists
+        }
         return Response(data=data, status=200)

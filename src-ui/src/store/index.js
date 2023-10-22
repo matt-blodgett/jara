@@ -1,5 +1,6 @@
 import { createStore } from 'vuex'
 import VuexPersistence from 'vuex-persist'
+import common from './modules/common'
 import auth from './modules/auth'
 
 const vuexLocal = new VuexPersistence({
@@ -12,24 +13,9 @@ const store = createStore({
   ],
   strict: (process.env.NODE_ENV !== 'production'),
   modules: {
+    common,
     auth
   }
 })
-
-// add to jsconfig.json compilerOptions
-//     "types": ["vite/client"],
-
-// if (import.meta.hot) {
-//   import.meta.hot.accept([
-//     './modules/auth'
-//   ], () => {
-//     const newModuleAuth = require('./modules/auth').default
-//     store.hotUpdate({
-//       modules: {
-//         auth: newModuleAuth
-//       }
-//     })
-//   })
-// }
 
 export default store

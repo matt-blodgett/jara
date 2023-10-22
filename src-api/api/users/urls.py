@@ -1,10 +1,11 @@
 from django.urls import path
 
-from api.users import views as user_views
-
+from api.users.views.authenticate import UserAuthenticationView
+from api.users.views.users import UserViewSet
+from api.users.views.validate import UserCheckExistsView
 
 urlpatterns = [
-    path('authenticate', user_views.UserAuthenticationView.as_view()),
-    path('users', user_views.UserViewSet.as_view(actions={'post': 'create'})),
-    path('validate/users', user_views.UserValidationView.as_view())
+    path('auth', UserAuthenticationView.as_view()),
+    path('users', UserViewSet.as_view(actions={'post': 'create'})),
+    path('check_exists', UserCheckExistsView.as_view())
 ]

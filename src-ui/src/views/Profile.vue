@@ -1,6 +1,7 @@
 <template>
   <v-container class="fill-height">
-    <div>TEST</div>
+    <div>Profile</div>
+    <div>Not Available</div>
   </v-container>
 </template>
 

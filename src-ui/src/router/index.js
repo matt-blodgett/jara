@@ -3,19 +3,6 @@ import store from '@/store'
 
 const routes = [
   {
-    path: '/login',
-    component: () => import('@/layouts/Default.vue'),
-    children: [
-      {
-        path: '',
-        component: () => import('@/views/Login.vue'),
-        meta: {
-          title: 'Login'
-        }
-      }
-    ]
-  },
-  {
     path: '/',
     component: () => import('@/layouts/Main.vue'),
     children: [
@@ -30,6 +17,27 @@ const routes = [
         }
       },
       {
+        path: 'login',
+        component: () => import('@/views/Login.vue'),
+        meta: {
+          title: 'Login'
+        }
+      },
+      {
+        path: 'reset-password',
+        component: () => import('@/views/ResetPassword.vue'),
+        meta: {
+          title: 'Reset Password'
+        }
+      },
+      {
+        path: 'sign-up',
+        component: () => import('@/views/SignUp.vue'),
+        meta: {
+          title: 'Sign Up'
+        }
+      },
+      {
         path: 'home',
         component: () => import('@/views/Home.vue'),
         meta: {
@@ -37,10 +45,31 @@ const routes = [
         }
       },
       {
-        path: 'test',
-        component: () => import('@/views/Test.vue'),
+        path: 'profile',
+        component: () => import('@/views/Profile.vue'),
         meta: {
-          title: 'Test'
+          title: 'Profile'
+        }
+      },
+      {
+        path: 'settings',
+        component: () => import('@/views/Settings.vue'),
+        meta: {
+          title: 'Settings'
+        }
+      },
+      {
+        path: 'about',
+        component: () => import('@/views/About.vue'),
+        meta: {
+          title: 'About'
+        }
+      },
+      {
+        path: 'contact',
+        component: () => import('@/views/Contact.vue'),
+        meta: {
+          title: 'Contact'
         }
       },
       {
@@ -54,7 +83,7 @@ const routes = [
   },
   {
     path: '/:unknownPath(.*)',
-    component: () => import('@/layouts/Default.vue'),
+    component: () => import('@/layouts/Main.vue'),
     children: [
       { 
         path: '',

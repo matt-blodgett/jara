@@ -32,7 +32,6 @@ export default {
   data () {
     return {
       footerLinks: [
-        { text: 'Home', to: '/home' },
         { text: 'About', to: '/about' },
         { text: 'Contact', to: '/contact' }
       ]

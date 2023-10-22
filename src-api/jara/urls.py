@@ -6,5 +6,5 @@ from api.version.views import VersionView
 
 urlpatterns = [
     path('api/version', VersionView.as_view()),
-    path('api/', include('api.users.urls'))
+    path('api/users/', include('api.users.urls'))
 ]

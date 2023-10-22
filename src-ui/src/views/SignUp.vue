@@ -1,15 +1,15 @@
 <template>
   <v-container class="fill-height">
-    <LoginForm />
+    <SignUpForm />
   </v-container>
 </template>
 
 <script>
-import LoginForm from '@/components/LoginForm.vue'
+import SignUpForm from '@/components/SignUpForm.vue'
 
 export default {
   components: {
-    LoginForm
+    SignUpForm
   }
 }
 </script>

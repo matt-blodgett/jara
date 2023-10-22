@@ -15,10 +15,10 @@ TOKEN_EXPIRY_SECONDS = 60 * 60 * 24
 
 
 class ProfileSerializer(serializers.ModelSerializer):
-    user_id = serializers.CharField()
+    username = serializers.CharField()
+    email = serializers.CharField()
     first_name = serializers.CharField()
     last_name = serializers.CharField()
-    email = serializers.CharField()
     timestamp = serializers.SerializerMethodField()
     expiry = serializers.SerializerMethodField()
 
@@ -34,25 +34,25 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = user_models.User
         fields = [
-            'user_id',
+            'username',
+            'email',
             'first_name',
             'last_name',
-            'email',
             'timestamp',
             'expiry'
         ]
 
 
-def authenticate(uid, pwd):
+def authenticate(username, password):
     token = None
     profile = None
 
     try:
-        user = user_models.User.objects.get(user_id=uid)
+        user = user_models.User.objects.get(username=username)
     except user_models.User.DoesNotExist:
         user = None
 
-    if user and hashers.check_password(pwd, user.password):
+    if user and hashers.check_password(password, user.password):
         profile = ProfileSerializer(user).data
         token = jwt.encode(profile, SECRET_KEY, algorithm='HS256').decode(encoding='UTF-8')
 
@@ -60,7 +60,7 @@ def authenticate(uid, pwd):
 
 
 class RequestSerializer(serializers.Serializer):
-    user_id = serializers.CharField()
+    username = serializers.CharField()
     password = serializers.CharField()
 
 
@@ -73,7 +73,7 @@ class UserAuthenticationView(APIView):
         post_data.is_valid(raise_exception=True)
         post_data = post_data.validated_data
 
-        token, profile = authenticate(post_data['user_id'], post_data['password'])
+        token, profile = authenticate(post_data['username'], post_data['password'])
         if not token or not profile:
             return Response(data={}, status=401)
 
@@ -81,5 +81,4 @@ class UserAuthenticationView(APIView):
             'token': token,
             'profile': profile
         }
-
         return Response(data=data, status=200)
