@@ -19,7 +19,9 @@
         </v-list>
         <v-list v-if="$store.getters.isAuthenticated">
           <v-list-item prepend-icon="mdi-account" title="Profile" to="/profile" />
-          <v-list-item prepend-icon="mdi-settings" title="Settings" to="/settings" />
+          <v-list-item prepend-icon="mdi-cog" title="Settings" to="/settings" />
+          <v-divider />
+          <v-list-item prepend-icon="mdi-information" title="About" to="/about" />
           <v-divider />
           <v-list-item prepend-icon="mdi-logout" title="Sign Out" @click="goToLogin()" />
         </v-list>
@@ -29,8 +31,7 @@
     <v-navigation-drawer v-model="isDrawerOpen" temporary>
       <v-list-item title="Jara" subtitle="Just Another Recipe App" />
       <v-divider />
-      <v-list-item title="About" to="/about" />
-      <v-list-item title="Contact" to="/contact" />
+      <v-list-item title="My Recipes" to="/recipes" />
     </v-navigation-drawer>
 
     <v-main>

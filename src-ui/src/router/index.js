@@ -59,6 +59,13 @@ const routes = [
         }
       },
       {
+        path: 'recipes',
+        component: () => import('@/views/Recipes.vue'),
+        meta: {
+          title: 'Recipes'
+        }
+      },
+      {
         path: 'about',
         component: () => import('@/views/About.vue'),
         meta: {
@@ -66,33 +73,26 @@ const routes = [
         }
       },
       {
-        path: 'contact',
-        component: () => import('@/views/Contact.vue'),
-        meta: {
-          title: 'Contact'
-        }
-      },
-      {
-        path: '401-unauthorized',
+        path: 'error-401',
         component: () => import('@/views/Error401.vue'),
         meta: {
           title: '401 Unauthorized'
         }
-      }
-    ]
-  },
-  {
-    path: '/:unknownPath(.*)',
-    component: () => import('@/layouts/Main.vue'),
-    children: [
+      },
       { 
-        path: '',
+        path: 'error-404',
         component: () => import('@/views/Error404.vue'),
         meta: {
           title: '404 Not Found'
         }
       }
     ]
+  },
+  {
+    path: '/:unknownPath(.*)',
+    redirect: to => {
+      return { path: '/error-404' }
+    }
   }
 ]
 

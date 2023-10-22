@@ -2,7 +2,8 @@ from django.urls import path
 
 from api.users.views.authenticate import UserAuthenticationView
 from api.users.views.users import UserViewSet
-from api.users.views.validate import UserCheckExistsView
+from api.users.views.check_exists import UserCheckExistsView
+
 
 urlpatterns = [
     path('auth', UserAuthenticationView.as_view()),

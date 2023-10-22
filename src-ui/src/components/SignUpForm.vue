@@ -9,17 +9,25 @@
       color="error"
       icon="$error"
       title="Registration Failed"
-      text="Your account could not be created"
+      text="There was an error creating your account"
       v-model="isErrorSubmit"
     />
 
-    <v-form ref="form" fast-fail>
+    <v-form ref="form" fast-fail @submit.prevent="submit">
+
+      <v-text-field
+        label="Email"
+        required
+        :error-messages="formErrorMessages.email"
+        :rules="formRules.email"
+        v-model="formData.email"
+      />
 
       <v-text-field
         label="Username"
         required
         :counter="30"
-        :error-messages="errorMessagesUsername"
+        :error-messages="formErrorMessages.username"
         :rules="formRules.username"
         v-model="formData.username"
       />
@@ -34,7 +42,7 @@
         <template v-slot:append-inner>
           <v-btn
             icon="mdi-eye"
-            variant="outline"
+            variant="plain"
             @click="togglePasswordVisibility('password')"
           />
         </template>
@@ -50,7 +58,7 @@
         <template v-slot:append-inner>
           <v-btn
             icon="mdi-eye"
-            variant="outline"
+            variant="plain"
             @click="togglePasswordVisibility('confirmPassword')"
           />
         </template>
@@ -68,6 +76,7 @@
 </template>
 
 <script>
+import { AUTH_REQUEST } from '@/store/types/auth'
 import { NOTIFY_SHOW } from '@/store/types/common'
 
 export default {
@@ -76,15 +85,26 @@ export default {
       isLoadingSubmit: false,
       isErrorSubmit: false,
       formData: {
+        email: null,
         username: null,
         password: null,
         confirmPassword: null
       },
-      formTypes: {
-        password: 'password',
-        confirmPassword: 'password'
-      },
       formRules: {
+        email: [
+          value => {
+            if (!value) {
+              return 'Field is required'
+            } else if (value.length > 128) {
+              return 'Email must be less than 128 characters long'
+            } else if (!value.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+              return 'Invalid email'
+            } else {
+              this.checkEmailExists(value)
+            }
+            return true
+          }
+        ],
         username: [
           value => {
             if (!value) {
@@ -126,7 +146,14 @@ export default {
           }
         ]
       },
-      errorMessagesUsername: null,
+      formErrorMessages: {
+        username: null,
+        email: null
+      },
+      formTypes: {
+        password: 'password',
+        confirmPassword: 'password'
+      }
     }
   },
   methods: {
@@ -140,32 +167,49 @@ export default {
     checkUsernameExists (username) {
       const url = '/users/check_exists'
       const params = {
-        username: username
+        type: 'username',
+        value: username
       }
       this.$apiClient.get(url, { params: params }).then(response => {
-        this.errorMessagesUsername = response.data.exists ? 'That username is already taken' : null
+        this.formErrorMessages.username = response.data.exists ? 'That username is already taken' : null
+      })
+    },
+    checkEmailExists (email) {
+      const url = '/users/check_exists'
+      const params = {
+        type: 'email',
+        value: email
+      }
+      this.$apiClient.get(url, { params: params }).then(response => {
+        this.formErrorMessages.email = response.data.exists ? 'An account with that email address already exists' : null
       })
     },
     async submit () {
       const { valid } = await this.$refs.form.validate()
       if (valid) {
         const url = '/users/users'
-        const data = {
-          username: this.formData.username,
-          password: this.formData.password,
-          email: 'test@test.com',
-          first_name: 'test',
-          last_name: 'test'
-        }
         this.isErrorSubmit = false
         this.isLoadingSubmit = true
-        this.$apiClient.post(url, data).then(response => {
-          this.isLoadingSubmit = false
+        this.$apiClient.post(url, this.formData).then(response => {
           this.$store.commit(NOTIFY_SHOW, {
             type: 'success',
-            message: 'Registration succesful'
+            message: 'Registration successful'
           })
-          this.$router.push({ path: '/login' })
+          this.$store.dispatch(AUTH_REQUEST, this.formData).then(response => {
+            this.isLoadingSubmit = false
+            this.$store.commit(NOTIFY_SHOW, {
+              type: 'success',
+              message: 'Login successful'
+            })
+            this.$router.push({ path: '/home' })
+          }).catch(error => {
+            this.isErrorSubmit = true
+            this.isLoadingSubmit = false
+            this.$store.commit(NOTIFY_SHOW, {
+              type: 'error',
+              message: 'Login failed'
+            })
+          })
         }).catch(error => {
           this.isErrorSubmit = true
           this.isLoadingSubmit = false

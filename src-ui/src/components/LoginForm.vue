@@ -13,7 +13,7 @@
       v-model="isErrorSubmit"
     />
 
-    <v-form ref="form" fast-fail>
+    <v-form ref="form" fast-fail @submit.prevent="submit">
       <v-text-field
         label="Username"
         required
@@ -22,9 +22,18 @@
       />
       <v-text-field
         label="Password"
+        :type="passwordFieldType"
         required
         v-model="formData.password"
-      />
+      >
+        <template v-slot:append-inner>
+          <v-btn
+            icon="mdi-eye"
+            variant="plain"
+            @click="passwordFieldType = passwordFieldType === 'password' ? 'text' : 'password'"
+          />
+        </template>
+      </v-text-field>
 
       <div class="text-right">
         <a href="/reset-password">Forgot password?</a>
@@ -56,7 +65,8 @@ export default {
       formData: {
         username: null,
         password: null
-      }
+      },
+      passwordFieldType: 'password'
     }
   },
   methods: {

@@ -6,7 +6,8 @@ from api.users import models as user_models
 
 
 class RequestSerializer(serializers.Serializer):
-    username = serializers.CharField()
+    type = serializers.ChoiceField(choices=['username', 'email'])
+    value = serializers.CharField()
 
 
 class UserCheckExistsView(APIView):
@@ -19,7 +20,7 @@ class UserCheckExistsView(APIView):
         query_params = query_params.validated_data
 
         exists = user_models.User.objects.filter(
-            username=query_params['username']
+            **{query_params['type']: query_params['value']}
         ).exists()
 
         data = {

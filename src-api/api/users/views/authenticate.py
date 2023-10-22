@@ -17,8 +17,6 @@ TOKEN_EXPIRY_SECONDS = 60 * 60 * 24
 class ProfileSerializer(serializers.ModelSerializer):
     username = serializers.CharField()
     email = serializers.CharField()
-    first_name = serializers.CharField()
-    last_name = serializers.CharField()
     timestamp = serializers.SerializerMethodField()
     expiry = serializers.SerializerMethodField()
 
@@ -36,8 +34,6 @@ class ProfileSerializer(serializers.ModelSerializer):
         fields = [
             'username',
             'email',
-            'first_name',
-            'last_name',
             'timestamp',
             'expiry'
         ]

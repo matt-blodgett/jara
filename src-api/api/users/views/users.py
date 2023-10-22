@@ -10,8 +10,6 @@ class UserSerializer(serializers.ModelSerializer):
     username = serializers.CharField(max_length=30, min_length=3)
     password = serializers.CharField(max_length=128, write_only=True)
     email = serializers.EmailField(max_length=128)
-    first_name = serializers.CharField(max_length=45, allow_null=True)
-    last_name = serializers.CharField(max_length=45, allow_null=True)
 
     def create(self, validated_data):
         pwd_raw = validated_data['password']
@@ -29,9 +27,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = [
             'username',
             'password',
-            'email',
-            'first_name',
-            'last_name'
+            'email'
         ]
 
 
