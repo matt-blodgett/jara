@@ -59,7 +59,8 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.auth',
     'corsheaders',
-    'api.users'
+    'api.users',
+    'api.recipes'
 ]
 
 

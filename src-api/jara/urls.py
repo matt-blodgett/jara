@@ -1,10 +1,9 @@
 from django.urls import path
 from django.urls import include
 
-from api.version.views import VersionView
-
 
 urlpatterns = [
-    path('api/version', VersionView.as_view()),
-    path('api/users/', include('api.users.urls'))
+    path('api/', include('api.version.urls')),
+    path('api/users/', include('api.users.urls')),
+    path('api/recipes/', include('api.recipes.urls'))
 ]
