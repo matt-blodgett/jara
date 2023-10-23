@@ -10,6 +10,10 @@ class Recipe(models.Model):
     description = models.CharField(max_length=2048, null=True, blank=True, default=None)
     notes = models.CharField(max_length=4096, null=True, blank=True, default=None)
 
+    # prep time
+    # cook time
+    # num servings
+
     created_by = models.ForeignKey(user_models.User, on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)

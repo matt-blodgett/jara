@@ -20,8 +20,6 @@
         v-model="formData.username"
         :maxlength="30"
         counter
-        density="compact"
-        variant="outlined"
         prepend-inner-icon="mdi-account"
       />
 
@@ -29,12 +27,11 @@
         label="Password"
         v-model="formData.password"
         :type="passwordFieldType"
-        density="compact"
-        variant="outlined"
-        prepend-inner-icon="mdi-lock-outline"
         :append-inner-icon="passwordFieldType === 'password' ? 'mdi-eye' : 'mdi-eye-off'"
         @click:append-inner="passwordFieldType = passwordFieldType === 'password' ? 'text' : 'password'"
+        prepend-inner-icon="mdi-lock-outline"
         autocomplete="on"
+        @keyup.enter="submit()"
       />
 
       <div class="text-right">
