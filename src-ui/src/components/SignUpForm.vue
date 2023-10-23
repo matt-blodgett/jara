@@ -17,52 +17,55 @@
 
       <v-text-field
         label="Email"
-        required
-        :error-messages="formErrorMessages.email"
-        :rules="formRules.email"
         v-model="formData.email"
+        :rules="formRules.email"
+        :error-messages="formErrorMessages.email"
+        :maxlength="128"
+        counter
+        density="compact"
+        variant="outlined"
+        prepend-inner-icon="mdi-email-outline"
       />
 
       <v-text-field
         label="Username"
-        required
-        :counter="30"
-        :error-messages="formErrorMessages.username"
-        :rules="formRules.username"
         v-model="formData.username"
+        :rules="formRules.username"
+        :error-messages="formErrorMessages.username"
+        :maxlength="30"
+        counter
+        density="compact"
+        variant="outlined"
+        prepend-inner-icon="mdi-account"
       />
 
       <v-text-field
         label="Password"
-        :type="formTypes.password"
-        required
-        :rules="formRules.password"
         v-model="formData.password"
-      >
-        <template v-slot:append-inner>
-          <v-btn
-            icon="mdi-eye"
-            variant="plain"
-            @click="togglePasswordVisibility('password')"
-          />
-        </template>
-      </v-text-field>
+        :type="formTypes.password"
+        :rules="formRules.password"
+        :maxlength="128"
+        density="compact"
+        variant="outlined"
+        prepend-inner-icon="mdi-lock-outline"
+        :append-inner-icon="formTypes.password === 'password' ? 'mdi-eye' : 'mdi-eye-off'"
+        @click:append-inner="formTypes.password = formTypes.password === 'password' ? 'text' : 'password'"
+        autocomplete="on"
+      />
 
       <v-text-field
         label="Confirm Password"
-        :type="formTypes.confirmPassword"
-        required
-        :rules="formRules.confirmPassword"
         v-model="formData.confirmPassword"
-      >
-        <template v-slot:append-inner>
-          <v-btn
-            icon="mdi-eye"
-            variant="plain"
-            @click="togglePasswordVisibility('confirmPassword')"
-          />
-        </template>
-      </v-text-field>
+        :type="formTypes.confirmPassword"
+        :rules="formRules.confirmPassword"
+        :maxlength="128"
+        density="compact"
+        variant="outlined"
+        prepend-inner-icon="mdi-lock-outline"
+        :append-inner-icon="formTypes.confirmPassword === 'password' ? 'mdi-eye' : 'mdi-eye-off'"
+        @click:append-inner="formTypes.confirmPassword = formTypes.confirmPassword === 'password' ? 'text' : 'password'"
+        autocomplete="on"
+      />
 
       <v-divider class="mb-4" />
 
@@ -157,13 +160,6 @@ export default {
     }
   },
   methods: {
-    togglePasswordVisibility (field) {
-      if (this.formTypes[field] === 'password') {
-        this.formTypes[field] = 'text'
-      } else {
-        this.formTypes[field] = 'password'
-      }
-    },
     checkUsernameExists (username) {
       const url = '/users/check_exists'
       const params = {

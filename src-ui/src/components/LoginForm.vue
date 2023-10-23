@@ -14,26 +14,28 @@
     />
 
     <v-form ref="form" fast-fail @submit.prevent="submit">
+
       <v-text-field
         label="Username"
-        required
-        :counter="30"
         v-model="formData.username"
+        :maxlength="30"
+        counter
+        density="compact"
+        variant="outlined"
+        prepend-inner-icon="mdi-account"
       />
+
       <v-text-field
         label="Password"
-        :type="passwordFieldType"
-        required
         v-model="formData.password"
-      >
-        <template v-slot:append-inner>
-          <v-btn
-            icon="mdi-eye"
-            variant="plain"
-            @click="passwordFieldType = passwordFieldType === 'password' ? 'text' : 'password'"
-          />
-        </template>
-      </v-text-field>
+        :type="passwordFieldType"
+        density="compact"
+        variant="outlined"
+        prepend-inner-icon="mdi-lock-outline"
+        :append-inner-icon="passwordFieldType === 'password' ? 'mdi-eye' : 'mdi-eye-off'"
+        @click:append-inner="passwordFieldType = passwordFieldType === 'password' ? 'text' : 'password'"
+        autocomplete="on"
+      />
 
       <div class="text-right">
         <a href="/reset-password">Forgot password?</a>

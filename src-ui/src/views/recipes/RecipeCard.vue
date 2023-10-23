@@ -1,7 +1,10 @@
 <template>
   <v-card class="mx-auto pa-2" border="md" rounded="lg" hover>
+
     <v-img class="align-end" height="200" src="/src/assets/no-image.svg" />
+
     <v-card-title>{{ recipe.title }}</v-card-title>
+
     <v-card-subtitle class="pt-4">{{ `By ${recipe.created_by}` }}</v-card-subtitle>
     <v-card-subtitle class="pt-4">{{ `On ${recipe.created_at}` }}</v-card-subtitle>
 
@@ -11,9 +14,9 @@
 
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn size="small" color="surface-variant" variant="text" icon="mdi-heart"></v-btn>
-      <v-btn size="small" color="surface-variant" variant="text" icon="mdi-bookmark"></v-btn>
-      <v-btn size="small" color="surface-variant" variant="text" icon="mdi-share-variant"></v-btn>
+      <v-btn size="small" color="surface-variant" variant="text" icon="mdi-heart" />
+      <v-btn size="small" color="surface-variant" variant="text" icon="mdi-bookmark" />
+      <v-btn size="small" color="surface-variant" variant="text" icon="mdi-share-variant" />
     </v-card-actions>
 
   </v-card>

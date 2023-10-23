@@ -19,48 +19,69 @@
 
         <v-text-field
           label="Title"
-          required
-          :counter="100"
           v-model="recipe.title"
+          :maxlength="100"
+          counter
+          density="compact"
+          variant="outlined"
         />
 
         <v-text-field
-          label="Description"
-          required
-          :counter="2048"
+]         label="Description"
           v-model="recipe.description"
+          :maxlength="2048"
+          counter
+          density="compact"
+          variant="outlined"
         />
 
         <v-text-field
           label="Notes"
-          required
-          :counter="4096"
           v-model="recipe.notes"
+          :maxlength="4096"
+          counter
+          density="compact"
+          variant="outlined"
         />
 
         <v-divider class="mb-4" />
 
         <v-container>
-          <v-row v-for="(ingredient, index) in recipe.ingredients" :key="`ingredient-${index}`">
+          <v-row v-for="(ingredient, index) in recipe.ingredients" :key="ingredient.id">
             <v-col>
               <div>{{ `#${index}` }}</div>
             </v-col>
             <v-col>
-              <div>{{ ingredient.quantity }}</div>
+              <v-text-field
+                label="Quantity"
+                v-model="ingredient.quantity"
+                density="compact"
+                variant="outlined"
+              />
             </v-col>
             <v-col>
-              <div>{{ ingredient.unit_of_measure }}</div>
+              <v-text-field
+                label="UOM"
+                v-model="ingredient.unit_of_measure"
+                density="compact"
+                variant="outlined"
+              />
             </v-col>
             <v-col>
-              <div>{{ ingredient.name }}</div>
+              <v-text-field
+                label="Ingredient Name"
+                v-model="ingredient.name"
+                density="compact"
+                variant="outlined"
+              />
             </v-col>
             <v-col>
-              <v-btn label="del" color="negative" @click="removeIngredient(index)" />
+              <v-btn icon="mdi-delete" color="error" variant="outlined" @click="removeIngredient(index)" />
             </v-col>
           </v-row>
           <v-row>
             <v-col>
-              <v-btn label="add" color="primary" @click="appendIngredient()" />
+              <v-btn icon="mdi-plus-circle-outline" color="success" @click="appendIngredient()" />
             </v-col>
           </v-row>
         </v-container>
@@ -68,12 +89,17 @@
         <v-divider class="mb-4" />
 
         <v-container>
-          <v-row v-for="(instruction, index) in recipe.instruction" :key="`instruction-${index}`">
+          <v-row v-for="(instruction, index) in recipe.instruction" :key="instruction.id">
             <v-col>
               <div>{{ `#${index}` }}</div>
             </v-col>
             <v-col>
-              <div>{{ instruction.text }}</div>
+              <v-text-field
+                label="Instruction"
+                v-model="instruction.text"
+                density="compact"
+                variant="outlined"
+              />
             </v-col>
           </v-row>
         </v-container>        

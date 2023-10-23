@@ -125,9 +125,11 @@ class RecipeListSerializer(RecipeSerializer):
 
 
 class RecipeViewSet(ModelViewSet):
-    permission_classes = [
-        TokenPermission
-    ]
+    permission_class = []
+    authentication_classes = []
+    # permission_classes = [
+    #     TokenPermission
+    # ]
     lookup_field = 'id'
     lookup_url_kwarg = 'id'
 
