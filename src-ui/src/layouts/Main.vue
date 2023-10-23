@@ -28,10 +28,11 @@
       </v-menu>
     </v-app-bar>
 
-    <v-navigation-drawer v-model="isDrawerOpen" temporary>
+    <v-navigation-drawer v-model="isDrawerOpen">
       <v-list-item title="Jara" subtitle="Just Another Recipe App" />
       <v-divider />
-      <v-list-item title="My Recipes" to="/recipes" />
+      <v-list-item title="New Recipe" to="/recipe-create" />
+      <v-list-item title="My Recipes" to="/recipe-list" />
     </v-navigation-drawer>
 
     <v-main>

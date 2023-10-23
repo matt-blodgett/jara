@@ -59,10 +59,17 @@ const routes = [
         }
       },
       {
-        path: 'recipes',
-        component: () => import('@/views/Recipes.vue'),
+        path: 'recipe-list',
+        component: () => import('@/views/recipes/RecipeList.vue'),
         meta: {
-          title: 'Recipes'
+          title: 'Recipes List'
+        }
+      },
+      {
+        path: 'recipe-create',
+        component: () => import('@/views/recipes/RecipeForm.vue'),
+        meta: {
+          title: 'New Recipe'
         }
       },
       {

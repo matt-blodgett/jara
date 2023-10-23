@@ -13,7 +13,8 @@ ROOT_URLCONF = 'jara.urls'
 
 ALLOWED_HOSTS = [
     'localhost',
-    '127.0.0.1'
+    '127.0.0.1',
+    'api'
 ]
 
 
@@ -90,6 +91,7 @@ DATABASES = {
 REST_FRAMEWORK = {
     'PAGE_SIZE': 10,
     'ORDERING_PARAM': 'sort',
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'api.library.authentication.TokenAuthentication'
     ],
