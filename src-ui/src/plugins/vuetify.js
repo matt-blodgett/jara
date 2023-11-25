@@ -26,5 +26,8 @@ export default createVuetify({
       variant: 'outlined',
       density: 'compact',
     },
+    VTextarea: {
+      variant: 'outlined'
+    },
   },
 })

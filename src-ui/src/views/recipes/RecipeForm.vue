@@ -22,46 +22,50 @@
         counter
       />
 
-      <v-text-field
+      <v-textarea
         label="Description"
         v-model="recipe.description"
         :maxlength="2048"
         counter
+        :rows="2"
+        auto-grow
       />
 
-      <v-text-field
+      <v-textarea
         label="Notes"
         v-model="recipe.notes"
         :maxlength="4096"
         counter
+        :rows="4"
+        auto-grow
       />
 
       <v-divider class="mb-4" />
 
       <v-container>
         <v-row v-for="(ingredient, index) in recipe.ingredients" :key="ingredient.id">
-          <v-col>
+          <v-col cols="1">
             <div>{{ `#${index}` }}</div>
           </v-col>
-          <v-col>
+          <v-col cols="2">
             <v-text-field
               label="Quantity"
               v-model="ingredient.quantity"
             />
           </v-col>
-          <v-col>
+          <v-col cols="2">
             <v-text-field
               label="UOM"
               v-model="ingredient.unit_of_measure"
             />
           </v-col>
-          <v-col>
+          <v-col cols="">
             <v-text-field
               label="Ingredient Name"
               v-model="ingredient.name"
             />
           </v-col>
-          <v-col>
+          <v-col cols="2">
             <v-btn icon="mdi-delete" color="error" variant="outlined" @click="removeIngredient(index)" />
           </v-col>
         </v-row>

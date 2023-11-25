@@ -12,7 +12,7 @@ const state = {
 }
 
 const getters = {
-  profile: state => state.profile,
+  userProfile: state => state.profile,
   isAuthenticated: state => !!state.token
 }
 

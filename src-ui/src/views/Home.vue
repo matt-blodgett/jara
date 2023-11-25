@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>Welcome: {{ $store.getters.profile?.username }}</div>
+    <div>Welcome: {{ $store.getters.userProfile?.username }}</div>
   </div>
 </template>
 
